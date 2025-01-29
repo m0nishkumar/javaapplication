@@ -4,14 +4,14 @@ public class CpuIntensiveApp {
         System.out.println("Starting CPU-intensive application...");
 
         long iterations = 2_000_000_000L;
-        Double finalResult = new Double(0.0); // Using wrapper class unnecessarily
+        Double finalResult = new Double(0.0); 
 
         // Start time measurement
         Long startTime = new Long(System.currentTimeMillis());
 
         // Perform heavy computations in a loop
         for (long i = 0; i < iterations; i++) {
-            ComputationA computationA = new ComputationA(); // Recreating objects every iteration
+            ComputationA computationA = new ComputationA(); 
             ComputationB computationB = new ComputationB();
 
             finalResult = new Double(finalResult.doubleValue() + computationA.performNestedComputation(i));
@@ -53,7 +53,7 @@ class ComputationA {
 
     private double nestedComputation2(long i) {
         double result = 0.0;
-        for (int j = 0; j < 1000; j++) { // Another unnecessary loop
+        for (int j = 0; j < 1000; j++) { 
             result += Math.exp(i % 1000) / (Math.log(i % 1000 + 1) + 1);
         }
         return result;
@@ -70,6 +70,6 @@ class ComputationB {
         if (n == 0 || n == 1) {
             return 1.0;
         }
-        return n * factorial(n - 1); // Using inefficient recursion instead of iteration
+        return n * factorial(n - 1); 
     }
 }
