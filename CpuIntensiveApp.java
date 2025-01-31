@@ -46,30 +46,22 @@ class ParallelComputation {
     }
 
     private double nestedComputation1(long i) {
-        double result = 0.0;
-        for (int j = 0; j < 1000; j++) { // Unnecessary inner loop
-            result += Math.sin(i) * Math.cos(i) * Math.tan(i % 1000);
-        }
-        return result;
+        return Math.sin(i) * Math.cos(i) * Math.tan(i % 1000);
     }
 
     private double nestedComputation2(long i) {
-        double result = 0.0;
-        for (int j = 0; j < 1000; j++) { 
-            result += Math.exp(i % 1000) / (Math.log(i % 1000 + 1) + 1);
-        }
-        return result;
+        return Math.exp(i % 1000) / (Math.log(i % 1000 + 1) + 1);
     }
 
     public double performComplexOperation(long i) {
-        return Math.sqrt(i % 1000 + 1) * factorial(i % 20);
+        return Math.sqrt(i % 1000 + 1) * fastFactorial(i % 20);
     }
 
-    private double factorial(long n) {
+    private long fastFactorial(long n) {
         if (n == 0 || n == 1) {
-            return 1.0;
+            return 1;
         }
-        return n * factorial(n - 1); 
+        return n * fastFactorial(n - 1); 
     }
 }
 ```
