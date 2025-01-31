@@ -1,5 +1,8 @@
 // Auto-updated via GitHub API
 ```java
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class OptimizedCpuIntensiveApp {
 
     public static void main(String[] args) {
@@ -11,7 +14,7 @@ public class OptimizedCpuIntensiveApp {
         // Start time measurement
         long startTime = System.currentTimeMillis();
 
-        // Perform heavy computations in a parallel loop
+        ExecutorService executor = Executors.newFixedThreadPool(4);
         ParallelComputation computationA = new ParallelComputation();
         ParallelComputation computationB = new ParallelComputation();
 
@@ -22,21 +25,22 @@ public class OptimizedCpuIntensiveApp {
             // Efficient progress reporting
             if (i % 100_000_000 == 0) {
                 System.out.printf("Iteration %d completed. Intermediate result: %.5f%n", i, finalResult);
-                try {
-                    Thread.sleep(10); // Artificial delays for demonstration purposes only
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
         }
 
-        // End time measurement
-        long endTime = System.currentTimeMillis();
+        executor.submit(() -> {
+            long endTime = System.currentTimeMillis();
+            System.out.printf("Computation completed. Final result: %.5f%n", finalResult);
+            System.out.printf("Total time taken: %.2f seconds.%n", (endTime - startTime) / 1000.0);
+        });
 
-        // Display results
-        System.out.printf("Computation completed. Final result: %.5f%n", finalResult);
-        System.out.printf("Total time taken: %.2f seconds.%n", (endTime - startTime) / 1000.0);
+        executor.shutdown();
+
+        while (!executor.isTerminated()) {
+            // Keep the main thread alive
+        }
     }
+
 }
 
 class ParallelComputation {
@@ -54,14 +58,14 @@ class ParallelComputation {
     }
 
     public double performComplexOperation(long i) {
-        return Math.sqrt(i % 1000 + 1) * fastFactorial(i % 20);
+        return Math.sqrt(i % 1000 + 1) * factorial(i % 20);
     }
 
-    private long fastFactorial(long n) {
+    private double factorial(long n) {
         if (n == 0 || n == 1) {
-            return 1;
+            return 1.0;
         }
-        return n * fastFactorial(n - 1); 
+        return n * factorial(n - 1); 
     }
 }
 ```
