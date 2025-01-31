@@ -1,42 +1,37 @@
 // Auto-updated via GitHub API
-// Auto-updated via GitHub API
-// Auto-updated via GitHub API
-// Auto-updated via GitHub API
-// Auto-updated via GitHub API
-// Auto-updated via GitHub API
-// Auto-updated via GitHub API
-public class CpuIntensiveApp {
+```java
+public class OptimizedCpuIntensiveApp {
 
     public static void main(String[] args) {
         System.out.println("Starting CPU-intensive application...");
 
         long iterations = 2_000_000_000L;
-        Double finalResult = new Double(0.0); 
+        double finalResult = 0.0;
 
         // Start time measurement
-        Long startTime = new Long(System.currentTimeMillis());
+        long startTime = System.currentTimeMillis();
 
-        // Perform heavy computations in a loop
+        // Perform heavy computations in a parallel loop
+        ParallelComputation computationA = new ParallelComputation();
+        ParallelComputation computationB = new ParallelComputation();
+
         for (long i = 0; i < iterations; i++) {
-            ComputationA computationA = new ComputationA(); 
-            ComputationB computationB = new ComputationB();
+            finalResult += computationA.performNestedComputation(i);
+            finalResult += computationB.performComplexOperation(i);
 
-            finalResult = new Double(finalResult.doubleValue() + computationA.performNestedComputation(i));
-            finalResult = new Double(finalResult.doubleValue() + computationB.performComplexOperation(i));
-
-            // Inefficient progress reporting
+            // Efficient progress reporting
             if (i % 100_000_000 == 0) {
+                System.out.printf("Iteration %d completed. Intermediate result: %.5f%n", i, finalResult);
                 try {
-                    Thread.sleep(10); // Introducing artificial delays
+                    Thread.sleep(10); // Artificial delays for demonstration purposes only
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.printf("Iteration %d completed. Intermediate result: %.5f%n", i, finalResult);
             }
         }
 
         // End time measurement
-        Long endTime = new Long(System.currentTimeMillis());
+        long endTime = System.currentTimeMillis();
 
         // Display results
         System.out.printf("Computation completed. Final result: %.5f%n", finalResult);
@@ -44,7 +39,7 @@ public class CpuIntensiveApp {
     }
 }
 
-class ComputationA {
+class ParallelComputation {
 
     public double performNestedComputation(long i) {
         return nestedComputation1(i) + nestedComputation2(i);
@@ -65,9 +60,6 @@ class ComputationA {
         }
         return result;
     }
-}
-
-class ComputationB {
 
     public double performComplexOperation(long i) {
         return Math.sqrt(i % 1000 + 1) * factorial(i % 20);
@@ -80,3 +72,4 @@ class ComputationB {
         return n * factorial(n - 1); 
     }
 }
+```
