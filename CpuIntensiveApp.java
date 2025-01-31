@@ -1,4 +1,5 @@
 // Auto-updated via GitHub API
+// Auto-updated via GitHub API
 public class CpuIntensiveApp {
 
     public static void main(String[] args) {
