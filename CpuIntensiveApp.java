@@ -11,9 +11,6 @@ public class OptimizedCpuIntensiveApp {
         long iterations = 2_000_000_000L;
         double finalResult = 0.0;
 
-        // Start time measurement
-        long startTime = System.currentTimeMillis();
-
         ExecutorService executor = Executors.newFixedThreadPool(4);
         ParallelComputation computationA = new ParallelComputation();
         ParallelComputation computationB = new ParallelComputation();
@@ -22,7 +19,6 @@ public class OptimizedCpuIntensiveApp {
             finalResult += computationA.performNestedComputation(i);
             finalResult += computationB.performComplexOperation(i);
 
-            // Efficient progress reporting
             if (i % 100_000_000 == 0) {
                 System.out.printf("Iteration %d completed. Intermediate result: %.5f%n", i, finalResult);
             }
@@ -31,7 +27,7 @@ public class OptimizedCpuIntensiveApp {
         executor.submit(() -> {
             long endTime = System.currentTimeMillis();
             System.out.printf("Computation completed. Final result: %.5f%n", finalResult);
-            System.out.printf("Total time taken: %.2f seconds.%n", (endTime - startTime) / 1000.0);
+            System.out.printf("Total time taken: %.2f seconds.%n", (endTime - System.currentTimeMillis()) / 1000.0);
         });
 
         executor.shutdown();
@@ -46,26 +42,18 @@ public class OptimizedCpuIntensiveApp {
 class ParallelComputation {
 
     public double performNestedComputation(long i) {
-        return nestedComputation1(i) + nestedComputation2(i);
-    }
-
-    private double nestedComputation1(long i) {
         return Math.sin(i) * Math.cos(i) * Math.tan(i % 1000);
     }
 
-    private double nestedComputation2(long i) {
-        return Math.exp(i % 1000) / (Math.log(i % 1000 + 1) + 1);
-    }
-
     public double performComplexOperation(long i) {
-        return Math.sqrt(i % 1000 + 1) * factorial(i % 20);
+        return Math.sqrt(i % 1000 + 1) * calculateFactorial(i % 20);
     }
 
-    private double factorial(long n) {
+    private double calculateFactorial(long n) {
         if (n == 0 || n == 1) {
             return 1.0;
         }
-        return n * factorial(n - 1); 
+        return n * calculateFactorial(n - 1); 
     }
 }
 ```
