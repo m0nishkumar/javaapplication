@@ -50,12 +50,12 @@ class ParallelComputation {
     }
 
     public double performComplexOperation(long i) {
-        long n = (long) (Math.sqrt(i % 1000 + 1));
-        if (n == 0 || n == 1) {
+        long n = (long) (Math.sqrt((i%1000 + 1)/2));
+        if(n == 0 || n==1){
             return 1.0;
         }
-        double result = calculateFactorial((int) (i % 20));
-        return n * result;
+        double result = calculateFactorial((int)(i %20));
+        return n *result;
     }
 
     private double calculateFactorial(long n) {
