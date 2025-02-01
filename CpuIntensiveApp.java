@@ -54,12 +54,14 @@ class ParallelComputation {
         if (n == 0 || n == 1) {
             return 1.0;
         }
-        return n * calculateFactorial((int) (i % 20));
+        double result = calculateFactorial((int) (i % 20));
+        return n * result;
     }
 
     private double calculateFactorial(long n) {
         double result = 1.0;
-        for (long i = 2; i <= n; i++) {
+        for (long i = 2; i <= Math.min(n, 10000L); i++) {
+            if (n < i) break;
             result *= i;
         }
         return result;
