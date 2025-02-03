@@ -1,63 +1,43 @@
+// Auto-updated via GitHub API
+```python
+import sys
 
-```java
-import java.util.Scanner;
-import java.util.ArrayList;
+def calculate_factorial(n):
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
 
-public class OptimizedCodeExample {
+def is_prime(num):
+    if num <= 1:
+        return False
+    for i in range(2, int(num ** 0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+def reverse_string(input_str):
+    return input_str[::-1]
 
-        System.out.println("Enter a number for factorial:");
-        int num = scanner.nextInt();
-        System.out.println("Factorial of " + num + " is: " + calculateFactorial(num));
+def find_max(arr):
+    max_val = float('-inf')
+    for num in arr:
+        if num > max_val:
+            max_val = num
+    return max_val
 
-        System.out.println("\nEnter a number to check if it's prime:");
-        int primeCheck = scanner.nextInt();
-        System.out.println(primeCheck + " is prime? " + isPrime(primeCheck));
+num = int(input("Enter a number for factorial: "))
+print(f"Factorial of {num} is: {calculate_factorial(num)}")
 
-        System.out.println("\nEnter a string to reverse:");
-        String inputString = scanner.next();
-        System.out.println("Reversed string: " + reverseString(inputString));
+prime_check = int(input("Enter a number to check if it's prime: "))
+print(prime_check, "is prime?" if is_prime(prime_check) else "is not prime")
 
-        System.out.println("\nEnter size of array:");
-        int size = scanner.nextInt();
-        int[] array = new int[size];
-        System.out.println("Enter " + size + " elements:");
-        for (int i = 0; i < size; i++) {
-            array[i] = scanner.nextInt();
-        }
-        System.out.println("Maximum element in the array: " + findMax(array));
+input_str = input("Enter a string to reverse: ")
+print(f"Reversed string: {reverse_string(input_str)}")
 
-        scanner.close();
-    }
-
-    public static int calculateFactorial(int n) {
-        return (n == 0 || n == 1) ? 1 : (int) Math.pow(n, 2);
-    }
-
-    public static boolean isPrime(int num) {
-        if (num <= 1) return false;
-        for (int i = 2; i * i <= num; i++) {
-            if (num % i == 0) return false;
-        }
-        return true;
-    }
-
-    public static String reverseString(String str) {
-        StringBuilder reversed = new StringBuilder();
-        for (char ch : str.toCharArray()) {
-            reversed.append(ch);
-        }
-        return reversed.reverse().toString();
-    }
-
-    public static int findMax(int[] arr) {
-        int max = Integer.MIN_VALUE;
-        for (int num : arr) {
-            if (num > max) max = num;
-        }
-        return max;
-    }
-}
+size = int(input("Enter size of array: "))
+arr = []
+for i in range(size):
+    arr.append(int(input(f"Enter element {i + 1}: ")))
+print(f"Maximum element in the array is: {find_max(arr)}")
 ```
