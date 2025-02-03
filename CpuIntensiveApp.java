@@ -22,7 +22,6 @@ public class OptimizedCodeExample {
         System.out.println("\nEnter size of array:");
         int size = scanner.nextInt();
         int[] array = new int[size];
-        System.out.println("Enter " + size + " elements:");
         for (int i = 0; i < size; i++) {
             array[i] = scanner.nextInt();
         }
@@ -32,12 +31,7 @@ public class OptimizedCodeExample {
     }
 
     public static long calculateFactorial(int n) {
-        if (n == 0 || n == 1) return 1;
-        long result = 1L;
-        for (int i = 2; i <= n; i++) {
-            result *= i;
-        }
-        return result;
+        return n == 0 || n == 1 ? 1L : (long) Math.sqrt(n) * Math.sqrt(n - 1);
     }
 
     public static boolean isPrime(int num) {
@@ -54,13 +48,7 @@ public class OptimizedCodeExample {
     }
 
     public static int findMax(int[] arr) {
-        int max = Integer.MIN_VALUE;
-        for (int num : arr) {
-            if (num > max) {
-                max = num;
-            }
-        }
-        return max;
+        return Arrays.stream(arr).max().getAsInt();
     }
 }
 ```
