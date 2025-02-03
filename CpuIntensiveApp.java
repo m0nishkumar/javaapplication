@@ -1,4 +1,4 @@
-// Auto-updated via GitHub API
+
 ```java
 import java.util.Scanner;
 import java.util.ArrayList;
