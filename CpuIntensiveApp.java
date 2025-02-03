@@ -59,8 +59,9 @@ class ParallelComputation {
     }
 
     private double calculateFactorial(long n) {
+        long limit = Math.min(n, 10000L);
         double result = 1.0;
-        for (long i = 2; i <= Math.min(n, 10000L); i++) {
+        for (long i = 2; i <= limit; i++) {
             if (n < i) break;
             result *= i;
         }
