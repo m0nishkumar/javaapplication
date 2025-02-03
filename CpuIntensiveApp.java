@@ -1,43 +1,118 @@
-// Auto-updated via GitHub API
-```python
-import sys
+import java.util.Scanner;
+import java.util.ArrayList;
 
-def calculate_factorial(n):
-    result = 1
-    for i in range(2, n + 1):
-        result *= i
-    return result
+public class UnoptimizedCodeExample {
 
-def is_prime(num):
-    if num <= 1:
-        return False
-    for i in range(2, int(num ** 0.5) + 1):
-        if num % i == 0:
-            return False
-    return True
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-def reverse_string(input_str):
-    return input_str[::-1]
+        System.out.println("Enter a number for factorial:");
+        int num = scanner.nextInt();
+        System.out.println("Factorial of " + num + " is: " + calculateFactorial(num));
 
-def find_max(arr):
-    max_val = float('-inf')
-    for num in arr:
-        if num > max_val:
-            max_val = num
-    return max_val
+        System.out.println("\nEnter a number to check if it's prime:");
+        int primeCheck = scanner.nextInt();
+        System.out.println(primeCheck + " is prime? " + isPrime(primeCheck));
 
-num = int(input("Enter a number for factorial: "))
-print(f"Factorial of {num} is: {calculate_factorial(num)}")
+        System.out.println("\nEnter a string to reverse:");
+        String inputString = scanner.next();
+        System.out.println("Reversed string: " + reverseString(inputString));
 
-prime_check = int(input("Enter a number to check if it's prime: "))
-print(prime_check, "is prime?" if is_prime(prime_check) else "is not prime")
+        System.out.println("\nEnter size of array:");
+        int size = scanner.nextInt();
+        int[] array = new int[size];
+        System.out.println("Enter " + size + " elements:");
+        for (int i = 0; i < size; i++) {
+            array[i] = scanner.nextInt();
+        }
+        System.out.println("Maximum element in the array: " + findMax(array));
 
-input_str = input("Enter a string to reverse: ")
-print(f"Reversed string: {reverse_string(input_str)}")
+        scanner.close();
+    }
 
-size = int(input("Enter size of array: "))
-arr = []
-for i in range(size):
-    arr.append(int(input(f"Enter element {i + 1}: ")))
-print(f"Maximum element in the array is: {find_max(arr)}")
-```
+    // Unoptimized factorial function
+    public static int calculateFactorial(int n) {
+        if (n == 0 || n == 1) return 1;
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+            list.add(i);
+        }
+
+        int result = 1;
+        for (int i = 0; i < list.size(); i++) {
+            result = result * list.get(i);
+        }
+
+        // Unnecessary check
+        if (result == factorialByRecursion(n)) {
+            return result;
+        } else {
+            return -1;
+        }
+    }
+
+    // Redundant recursive factorial for comparison
+    public static int factorialByRecursion(int n) {
+        if (n <= 1) return 1;
+        return n * factorialByRecursion(n - 1);
+    }
+
+    // Unoptimized prime checking
+    public static boolean isPrime(int num) {
+        if (num <= 1) return false;
+
+        ArrayList<Integer> divisors = new ArrayList<>();
+        for (int i = 1; i <= num; i++) {
+            if (num % i == 0) {
+                divisors.add(i);
+            }
+        }
+
+        // Prime check by size of divisors list
+        if (divisors.size() == 2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Unoptimized string reversal
+    public static String reverseString(String str) {
+        char[] charArray = str.toCharArray();
+        ArrayList<Character> reversedList = new ArrayList<>();
+
+        for (int i = charArray.length - 1; i >= 0; i--) {
+            reversedList.add(charArray[i]);
+        }
+
+        String reversedString = "";
+        for (Character ch : reversedList) {
+            reversedString += ch;  // Inefficient string concatenation
+        }
+
+        return reversedString;
+    }
+
+    // Unoptimized maximum finder
+    public static int findMax(int[] arr) {
+        int max = Integer.MIN_VALUE;
+
+        for (int i = 0; i < arr.length; i++) {
+            boolean isMax = true;
+
+            for (int j = 0; j < arr.length; j++) {
+                if (arr[i] < arr[j]) {
+                    isMax = false;
+                    break;
+                }
+            }
+
+            if (isMax) {
+                max = arr[i];
+                break;
+            }
+        }
+
+        return max;
+    }
+}
