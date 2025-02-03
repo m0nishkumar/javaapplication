@@ -1,7 +1,8 @@
+// Auto-updated via GitHub API
+```java
 import java.util.Scanner;
-import java.util.ArrayList;
 
-public class UnoptimizedCodeExample {
+public class OptimizedCodeExample {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -30,89 +31,36 @@ public class UnoptimizedCodeExample {
         scanner.close();
     }
 
-    // Unoptimized factorial function
-    public static int calculateFactorial(int n) {
+    public static long calculateFactorial(int n) {
         if (n == 0 || n == 1) return 1;
-        ArrayList<Integer> list = new ArrayList<>();
-        for (int i = 1; i <= n; i++) {
-            list.add(i);
+        long result = 1L;
+        for (int i = 2; i <= n; i++) {
+            result *= i;
         }
-
-        int result = 1;
-        for (int i = 0; i < list.size(); i++) {
-            result = result * list.get(i);
-        }
-
-        // Unnecessary check
-        if (result == factorialByRecursion(n)) {
-            return result;
-        } else {
-            return -1;
-        }
+        return result;
     }
 
-    // Redundant recursive factorial for comparison
-    public static int factorialByRecursion(int n) {
-        if (n <= 1) return 1;
-        return n * factorialByRecursion(n - 1);
-    }
-
-    // Unoptimized prime checking
     public static boolean isPrime(int num) {
         if (num <= 1) return false;
-
-        ArrayList<Integer> divisors = new ArrayList<>();
-        for (int i = 1; i <= num; i++) {
-            if (num % i == 0) {
-                divisors.add(i);
-            }
+        for (int i = 2; i * i <= num; i++) {
+            if (num % i == 0) return false;
         }
-
-        // Prime check by size of divisors list
-        if (divisors.size() == 2) {
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 
-    // Unoptimized string reversal
     public static String reverseString(String str) {
-        char[] charArray = str.toCharArray();
-        ArrayList<Character> reversedList = new ArrayList<>();
-
-        for (int i = charArray.length - 1; i >= 0; i--) {
-            reversedList.add(charArray[i]);
-        }
-
-        String reversedString = "";
-        for (Character ch : reversedList) {
-            reversedString += ch;  // Inefficient string concatenation
-        }
-
-        return reversedString;
+        StringBuilder sb = new StringBuilder(str);
+        return sb.reverse().toString();
     }
 
-    // Unoptimized maximum finder
     public static int findMax(int[] arr) {
         int max = Integer.MIN_VALUE;
-
-        for (int i = 0; i < arr.length; i++) {
-            boolean isMax = true;
-
-            for (int j = 0; j < arr.length; j++) {
-                if (arr[i] < arr[j]) {
-                    isMax = false;
-                    break;
-                }
-            }
-
-            if (isMax) {
-                max = arr[i];
-                break;
+        for (int num : arr) {
+            if (num > max) {
+                max = num;
             }
         }
-
         return max;
     }
 }
+```
