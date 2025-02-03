@@ -1,71 +1,118 @@
+import java.util.Scanner;
+import java.util.ArrayList;
 
-```java
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-public class OptimizedCpuIntensiveApp {
+public class UnoptimizedCodeExample {
 
     public static void main(String[] args) {
-        System.out.println("Starting CPU-intensive application...");
+        Scanner scanner = new Scanner(System.in);
 
-        long iterations = 2_000_000_000L;
-        double finalResult = 0.0;
+        System.out.println("Enter a number for factorial:");
+        int num = scanner.nextInt();
+        System.out.println("Factorial of " + num + " is: " + calculateFactorial(num));
 
-        ExecutorService executor = Executors.newFixedThreadPool(4);
+        System.out.println("\nEnter a number to check if it's prime:");
+        int primeCheck = scanner.nextInt();
+        System.out.println(primeCheck + " is prime? " + isPrime(primeCheck));
 
-        ParallelComputation computationA = new ParallelComputation();
-        ParallelComputation computationB = new ParallelComputation();
+        System.out.println("\nEnter a string to reverse:");
+        String inputString = scanner.next();
+        System.out.println("Reversed string: " + reverseString(inputString));
 
-        for (long i = 0; i < iterations; i++) {
-            long start = System.nanoTime();
-            finalResult += computationA.performNestedComputation(i);
-            finalResult += computationB.performComplexOperation(i);
+        System.out.println("\nEnter size of array:");
+        int size = scanner.nextInt();
+        int[] array = new int[size];
+        System.out.println("Enter " + size + " elements:");
+        for (int i = 0; i < size; i++) {
+            array[i] = scanner.nextInt();
+        }
+        System.out.println("Maximum element in the array: " + findMax(array));
 
-            if (i % 100_000_000 == 0) {
-                double endTime = System.nanoTime() - start;
-                System.out.printf("Iteration %d completed. Intermediate result: %.5f%n", i, finalResult);
+        scanner.close();
+    }
+
+    // Unoptimized factorial function
+    public static int calculateFactorial(int n) {
+        if (n == 0 || n == 1) return 1;
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+            list.add(i);
+        }
+
+        int result = 1;
+        for (int i = 0; i < list.size(); i++) {
+            result = result * list.get(i);
+        }
+
+        // Unnecessary check
+        if (result == factorialByRecursion(n)) {
+            return result;
+        } else {
+            return -1;
+        }
+    }
+
+    // Redundant recursive factorial for comparison
+    public static int factorialByRecursion(int n) {
+        if (n <= 1) return 1;
+        return n * factorialByRecursion(n - 1);
+    }
+
+    // Unoptimized prime checking
+    public static boolean isPrime(int num) {
+        if (num <= 1) return false;
+
+        ArrayList<Integer> divisors = new ArrayList<>();
+        for (int i = 1; i <= num; i++) {
+            if (num % i == 0) {
+                divisors.add(i);
             }
         }
 
-        executor.submit(() -> {
-            long endTime = System.nanoTime();
-            double totalEndTime = (endTime - System.nanoTime()) / 1e9;
-            System.out.printf("Computation completed. Final result: %.5f%n", finalResult);
-            System.out.printf("Total time taken: %.2f seconds.%n", totalEndTime);
-        });
-
-        executor.shutdown();
-
-        while (!executor.isTerminated()) {
-            // Keep the main thread alive
+        // Prime check by size of divisors list
+        if (divisors.size() == 2) {
+            return true;
+        } else {
+            return false;
         }
     }
 
+    // Unoptimized string reversal
+    public static String reverseString(String str) {
+        char[] charArray = str.toCharArray();
+        ArrayList<Character> reversedList = new ArrayList<>();
+
+        for (int i = charArray.length - 1; i >= 0; i--) {
+            reversedList.add(charArray[i]);
+        }
+
+        String reversedString = "";
+        for (Character ch : reversedList) {
+            reversedString += ch;  // Inefficient string concatenation
+        }
+
+        return reversedString;
+    }
+
+    // Unoptimized maximum finder
+    public static int findMax(int[] arr) {
+        int max = Integer.MIN_VALUE;
+
+        for (int i = 0; i < arr.length; i++) {
+            boolean isMax = true;
+
+            for (int j = 0; j < arr.length; j++) {
+                if (arr[i] < arr[j]) {
+                    isMax = false;
+                    break;
+                }
+            }
+
+            if (isMax) {
+                max = arr[i];
+                break;
+            }
+        }
+
+        return max;
+    }
 }
-
-class ParallelComputation {
-
-    public double performNestedComputation(long i) {
-        return Math.sin(i) * Math.cos(i) * Math.tan(i % 1000);
-    }
-
-    public double performComplexOperation(long i) {
-        long n = (long) (Math.sqrt((i%1000 + 1)/2));
-        if(n == 0 || n==1){
-            return 1.0;
-        }
-        double result = calculateFactorial((int)(i %20));
-        return n *result;
-    }
-
-    private double calculateFactorial(long n) {
-        long limit = Math.min(n, 10000L);
-        double result = 1.0;
-        for (long i = 2; i <= limit; i++) {
-            if (n < i) break;
-            result *= i;
-        }
-        return result;
-    }
-}
-```
