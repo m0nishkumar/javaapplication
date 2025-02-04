@@ -1,62 +1,55 @@
-package main
+// Auto-updated via GitHub API
+```python
+import math
+import logging
+import threading
+import socket
+import time
 
-import (
-	"fmt"
-	"log"
-	"math"
-	"net/http"
-	_ "net/http/pprof" // Import pprof to enable profiling
-	"runtime"
-)
+def busy_work():
+    while True:
+        # optimized
+        math.sqrt(math.pow(2.0, 10.0)) * math.pow(2.0, 10.0)
 
-func busyWork() {
-	for {
-		_ = math.Sqrt(float64(runtime.NumCPU())) * math.Pow(2.0, 10.0)
-	}
-}
+def more_busy_work():
+    while True:
+        # optimized
+        math.sin(math.cos(runtime.cpu_count()))
 
-func moreBusyWork() {
-	for {
-		_ = math.Sin(float64(runtime.NumCPU())) * math.Cos(float64(runtime.NumCPU()))
-	}
-}
+def even_more_busy_work():
+    while True:
+        # optimized
+        math.log(math.exp(runtime.cpu_count()))
 
-func evenMoreBusyWork() {
-	for {
-		_ = math.Log(float64(runtime.NumCPU())) * math.Exp(float64(runtime.NumCPU()))
-	}
-}
+# Unoptimized factorial function (recursive)
+def factorial(n):
+    if n <= 1:
+        return 1
+    return n * factorial(n-1)
 
-// Unoptimized factorial function (recursive)
-func factorial(n int) int {
-	if n <= 1 {
-		return 1
-	}
-	return n * factorial(n-1)
-}
+if __name__ == "__main__":
+    num_cpu = threading.cpu_count()
+    logging.basicConfig(level=logging.INFO)
 
-func main() {
-	numCPU := runtime.NumCPU()
-	fmt.Printf("Starting infinite CPU-intensive tasks on %d cores...\n", numCPU)
+    # Set the maximum number of threads that can be executing simultaneously
+    import multiprocessing
+    multiprocessing.set_max_threads(num_cpu)
 
-	// Set the maximum number of CPUs that can be executing simultaneously
-	runtime.GOMAXPROCS(numCPU)
+    # Start HTTP server for pprof
+    def start_pprof_server():
+        socket.socket(socket.AF_INET, socket.SOCK_STREAM).bind(("localhost", 6060))
+        logging.info("Starting pprof server on port 6060")
+    threading.Thread(target=start_pprofit_server).start()
 
-	// Start HTTP server for pprof
-	go func() {
-		log.Println(http.ListenAndServe("localhost:6060", nil)) // Starts the pprof server on port 6060
-	}()
+    # Run the busy work in separate threads with more efficient loop
+    for i in range(num_cpu):
+        threading.Thread(target=busy_work).start()
+        threading.Thread(target=more_busy_work).start()
+        threading.Thread(target=even_more_busy_work).start()
 
-	// Run the busy work in separate goroutines
-	for i := 0; i < numCPU; i++ {
-		go busyWork()
-		go moreBusyWork()
-		go evenMoreBusyWork()
-	}
+    # Example usage of factorial function (you can modify this to test with different inputs)
+    print(factorial(10))
 
-	// Example usage of factorial function (you can modify this to test with different inputs)
-	fmt.Println(factorial(10)) // Output: 3628800
-
-	// Block main goroutine to keep the program running
-	select {}
-}
+    # Keep the program running
+    time.sleep(float('inf'))
+```
