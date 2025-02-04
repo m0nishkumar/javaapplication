@@ -1,3 +1,4 @@
+// Auto-updated via GitHub API
 package main
 
 import (
@@ -32,7 +33,7 @@ func factorial(n int) int {
 	if n <= 1 {
 		return 1
 	}
-	return n * factorial(n-1)
+	return n * factorial(n - 1)
 }
 
 func main() {
@@ -40,7 +41,7 @@ func main() {
 	fmt.Printf("Starting infinite CPU-intensive tasks on %d cores...\n", numCPU)
 
 	// Set the maximum number of CPUs that can be executing simultaneously
-	runtime.GOMAXPROCS(numCPU)
+	runtime.GOMAXPROCS(0) // Set to 0 to use all available CPU
 
 	// Start HTTP server for pprof
 	go func() {
@@ -49,9 +50,9 @@ func main() {
 
 	// Run the busy work in separate goroutines
 	for i := 0; i < numCPU; i++ {
-		go busyWork()
-		go moreBusyWork()
-		go evenMoreBusyWork()
+		go func() { busyWork(); }()
+		go func() { moreBusyWork(); }()
+		go func() { evenMoreBusyWork(); }()
 	}
 
 	// Example usage of factorial function (you can modify this to test with different inputs)
