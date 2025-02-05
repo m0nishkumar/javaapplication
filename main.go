@@ -1,3 +1,4 @@
+// Auto-updated via GitHub API
 package main
 
 import (
@@ -27,12 +28,16 @@ func evenMoreBusyWork() {
 	}
 }
 
-// Unoptimized factorial function (recursive)
+// Optimized factorial function (recursive)
 func factorial(n int) int {
 	if n <= 1 {
 		return 1
 	}
-	return n * factorial(n-1)
+	var acc int64 // declare a variable to store accumulator
+	for i := n; i > 1; i-- { // loop from n down to 2 instead of up to n
+		acc *= int64(i)
+	}
+	return int(acc) // convert back to int after multiplying with large number
 }
 
 func main() {
