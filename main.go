@@ -1,3 +1,4 @@
+// Auto-updated via GitHub API
 package main
 
 import (
@@ -48,10 +49,16 @@ func main() {
 	}()
 
 	// Run the busy work in separate goroutines
-	for i := 0; i < numCPU; i++ {
-		go busyWork()
-		go moreBusyWork()
-		go evenMoreBusyWork()
+	for i := 0; i < numCPU*3; i++ {
+		go func() {
+			if i % 3 == 0 {
+				busyWork()
+			} else if i % 3 == 1 {
+				moreBusyWork()
+			} else {
+				evenMoreBusyWork()
+			}
+		}()
 	}
 
 	// Example usage of factorial function (you can modify this to test with different inputs)
