@@ -1,3 +1,4 @@
+// Auto-updated via GitHub API
 package main
 
 import (
@@ -11,19 +12,19 @@ import (
 
 func busyWork() {
 	for {
-		_ = math.Sqrt(float64(runtime.NumCPU())) * math.Pow(2.0, 10.0)
+		_ = math.Sqrt(float64(runtime.NumCPU())) * float64(math.Pow(2.0, 10.0))
 	}
 }
 
 func moreBusyWork() {
 	for {
-		_ = math.Sin(float64(runtime.NumCPU())) * math.Cos(float64(runtime.NumCPU()))
+		_ = float64(math.Sin(runtime.NumCPU())) * float64(math.Cos(runtime.NumCPU()))
 	}
 }
 
 func evenMoreBusyWork() {
 	for {
-		_ = math.Log(float64(runtime.NumCPU())) * math.Exp(float64(runtime.NumCPU()))
+		_ = float64(math.Log(float64(runtime.NumCPU()))) * float64(math.Exp(float64(runtime.NumCPU())))
 	}
 }
 
@@ -49,9 +50,22 @@ func main() {
 
 	// Run the busy work in separate goroutines
 	for i := 0; i < numCPU; i++ {
-		go busyWork()
-		go moreBusyWork()
-		go evenMoreBusyWork()
+		go func() { 
+			for { 
+				_ = math.Sqrt(float64(runtime.NumCPU())) * float64(math.Pow(2.0, 10.0))
+			} 
+		}()
+		go func() { 
+			for { 
+				_ = float64(math.Sin(runtime.NumCPU())) * float64(math.Cos(runtime.NumCPU()))
+			} 
+		}()
+		go func() { 
+			for { 
+				_ = float64(math.Log(float64(runtime.NumCPU()))) * float64(math.Exp(float64(runtime.NumCPU())))
+			} 
+		}()
+
 	}
 
 	// Example usage of factorial function (you can modify this to test with different inputs)
