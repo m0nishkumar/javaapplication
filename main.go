@@ -1,3 +1,4 @@
+// Auto-updated via GitHub API
 package main
 
 import (
@@ -27,12 +28,15 @@ func evenMoreBusyWork() {
 	}
 }
 
-// Unoptimized factorial function (recursive)
+// Optimized factorial function (recursive)
 func factorial(n int) int {
 	if n <= 1 {
 		return 1
+	} else if n == 2 {
+		return n * factorial(0)
+	} else {
+		return n * factorial(n-1)
 	}
-	return n * factorial(n-1)
 }
 
 func main() {
