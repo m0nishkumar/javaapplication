@@ -1,3 +1,4 @@
+// Auto-updated via GitHub API
 package main
 
 import (
@@ -57,6 +58,5 @@ func main() {
 	// Example usage of factorial function (you can modify this to test with different inputs)
 	fmt.Println(factorial(10)) // Output: 3628800
 
-	// Block main goroutine to keep the program running
 	select {}
 }
