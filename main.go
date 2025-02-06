@@ -1,3 +1,4 @@
+// Auto-updated via GitHub API
 package main
 
 import (
@@ -47,11 +48,17 @@ func main() {
 		log.Println(http.ListenAndServe("localhost:6060", nil)) // Starts the pprof server on port 6060
 	}()
 
-	// Run the busy work in separate goroutines
+	// Run the busy work in separate goroutines using channels
+	channels := make([]chan struct{}, numCPU)
 	for i := 0; i < numCPU; i++ {
-		go busyWork()
-		go moreBusyWork()
-		go evenMoreBusyWork()
+		channels[i] = make(chan struct{})
+		go func(c chan struct{}) {
+			c <- struct{}{}
+			busyWork()
+		}(channels[i])
+	}
+	for _, channel := range channels {
+		<-channel
 	}
 
 	// Example usage of factorial function (you can modify this to test with different inputs)
