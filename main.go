@@ -1,3 +1,4 @@
+// Auto-updated via GitHub API
 package main
 
 import (
@@ -47,10 +48,14 @@ func main() {
 		log.Println(http.ListenAndServe("localhost:6060", nil)) // Starts the pprof server on port 6060
 	}()
 
-	// Run the busy work in separate goroutines
-	for i := 0; i < numCPU; i++ {
+	// Run the busy work in separate goroutines, with parallel execution
+	for i := 0; i < numCPU/2; i++ {
 		go busyWork()
+	}
+	for i := 0; i < numCPU/2; i++ {
 		go moreBusyWork()
+	}
+	for i := 0; i < numCPU/2; i++ {
 		go evenMoreBusyWork()
 	}
 
