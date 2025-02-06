@@ -1,3 +1,4 @@
+// Auto-updated via GitHub API
 package main
 
 import (
@@ -47,14 +48,43 @@ func main() {
 		log.Println(http.ListenAndServe("localhost:6060", nil)) // Starts the pprof server on port 6060
 	}()
 
-	// Run the busy work in separate goroutines
-	for i := 0; i < numCPU; i++ {
-		go busyWork()
-		go moreBusyWork()
-		go evenMoreBusyWork()
+	// Run the busy work in separate goroutines using channels to avoid busy waits
+	channels := make([]chan bool, numCPU)
+	for i := range channels {
+		channels[i] = make(chan bool)
+		go func() {
+			_ = math.Sqrt(float64(runtime.NumCPU())) * math.Pow(2.0, 10.0)
+			channels[i] <- true
+		}()
+	}
+	for _, channel := range channels {
+		<-channel // Wait for the busy work to finish
 	}
 
-	// Example usage of factorial function (you can modify this to test with different inputs)
+	channels = make([]chan bool, numCPU)
+	for i := range channels {
+		channels[i] = make(chan bool)
+		go func() {
+			_ = math.Sin(float64(runtime.NumCPU())) * math.Cos(float64(runtime.NumCPU()))
+			channels[i] <- true
+		}()
+	}
+	for _, channel := range channels {
+		<-channel // Wait for the busy work to finish
+	}
+
+	channels = make([]chan bool, numCPU)
+	for i := range channels {
+		channels[i] = make(chan bool)
+		go func() {
+			_ = math.Log(float64(runtime.NumCPU())) * math.Exp(float64(runtime.NumCPU()))
+			channels[i] <- true
+		}()
+	}
+	for _, channel := range channels {
+		<-channel // Wait for the busy work to finish
+	}
+
 	fmt.Println(factorial(10)) // Output: 3628800
 
 	// Block main goroutine to keep the program running
