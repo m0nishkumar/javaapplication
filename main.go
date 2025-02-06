@@ -1,3 +1,4 @@
+// Auto-updated via GitHub API
 package main
 
 import (
@@ -10,21 +11,15 @@ import (
 )
 
 func busyWork() {
-	for {
-		_ = math.Sqrt(float64(runtime.NumCPU())) * math.Pow(2.0, 10.0)
-	}
+	for range math.Sqrt(float64(runtime.NumCPU())) * math.Pow(2.0, 10.0) {}
 }
 
 func moreBusyWork() {
-	for {
-		_ = math.Sin(float64(runtime.NumCPU())) * math.Cos(float64(runtime.NumCPU()))
-	}
+	for range math.Sin(float64(runtime.NumCPU())) * math.Cos(float64(runtime.NumCPU())) {}
 }
 
 func evenMoreBusyWork() {
-	for {
-		_ = math.Log(float64(runtime.NumCPU())) * math.Exp(float64(runtime.NumCPU()))
-	}
+	for range math.Log(float64(runtime.NumCPU())) * math.Exp(float64(runtime.NumCPU())) {}
 }
 
 // Unoptimized factorial function (recursive)
