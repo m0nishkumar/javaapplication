@@ -1,3 +1,4 @@
+// Auto-updated via GitHub API
 package main
 
 import (
@@ -10,20 +11,20 @@ import (
 )
 
 func busyWork() {
-	for {
-		_ = math.Sqrt(float64(runtime.NumCPU())) * math.Pow(2.0, 10.0)
+	for i := 0; i < math.Pow(2.0, 10.0); i++ {
+		_ = math.Sqrt(float64(runtime.NumCPU()))
 	}
 }
 
 func moreBusyWork() {
-	for {
-		_ = math.Sin(float64(runtime.NumCPU())) * math.Cos(float64(runtime.NumCPU()))
+	for i := 0; i < math.Sin(float64(math.Pi)); i++ {
+		_ = math.Cos(float64(math.Pi))
 	}
 }
 
 func evenMoreBusyWork() {
-	for {
-		_ = math.Log(float64(runtime.NumCPU())) * math.Exp(float64(runtime.NumCPU()))
+	for i := 0; i < math.Log(2.0); i++ {
+		_ = math.Exp(float64(math.E))
 	}
 }
 
