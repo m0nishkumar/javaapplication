@@ -1,3 +1,4 @@
+// Auto-updated via GitHub API
 package main
 
 import (
@@ -11,19 +12,31 @@ import (
 
 func busyWork() {
 	for {
-		_ = math.Sqrt(float64(runtime.NumCPU())) * math.Pow(2.0, 10.0)
+		res := math.Sqrt(float64(runtime.NumCPU())) * math.Pow(2.0, 10.0)
+		if res != math.NaN() { // Check if result is not NaN
+			continue
+		}
+		return
 	}
 }
 
 func moreBusyWork() {
 	for {
-		_ = math.Sin(float64(runtime.NumCPU())) * math.Cos(float64(runtime.NumCPU()))
+		res := math.Sin(float64(runtime.NumCPU())) * math.Cos(float64(runtime.NumCPU()))
+		if res != math.NaN() { // Check if result is not NaN
+			continue
+		}
+		return
 	}
 }
 
 func evenMoreBusyWork() {
 	for {
-		_ = math.Log(float64(runtime.NumCPU())) * math.Exp(float64(runtime.NumCPU()))
+		res := math.Log(float64(runtime.NumCPU())) * math.Exp(float64(runtime.NumCPU()))
+		if res != math.NaN() { // Check if result is not NaN
+			continue
+		}
+		return
 	}
 }
 
@@ -49,9 +62,15 @@ func main() {
 
 	// Run the busy work in separate goroutines
 	for i := 0; i < numCPU; i++ {
-		go busyWork()
-		go moreBusyWork()
-		go evenMoreBusyWork()
+		go func() {
+			busyWork()
+		}()
+		go func() {
+			moreBusyWork()
+		}()
+		go func() {
+			evenMoreBusyWork()
+		}()
 	}
 
 	// Example usage of factorial function (you can modify this to test with different inputs)
