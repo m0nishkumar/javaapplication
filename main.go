@@ -1,3 +1,4 @@
+// Auto-updated via GitHub API
 package main
 
 import (
@@ -10,20 +11,20 @@ import (
 )
 
 func busyWork() {
-	for {
-		_ = math.Sqrt(float64(runtime.NumCPU())) * math.Pow(2.0, 10.0)
+	for i := 0; i < runtime.NumCPU(); i++ {
+		_ = math.Sqrt(float64(runtime.NumCPU())) * math.Pow(2.0, float64(i)*10.0)
 	}
 }
 
 func moreBusyWork() {
-	for {
-		_ = math.Sin(float64(runtime.NumCPU())) * math.Cos(float64(runtime.NumCPU()))
+	for i := 0; i < runtime.NumCPU(); i++ {
+		_ = math.Sin(float64(i)) * math.Cos(float64(i))
 	}
 }
 
 func evenMoreBusyWork() {
-	for {
-		_ = math.Log(float64(runtime.NumCPU())) * math.Exp(float64(runtime.NumCPU()))
+	for i := 0; i < runtime.NumCPU(); i++ {
+		_ = math.Log(float64(i)) * math.Exp(float64(i))
 	}
 }
 
@@ -48,7 +49,7 @@ func main() {
 	}()
 
 	// Run the busy work in separate goroutines
-	for i := 0; i < numCPU; i++ {
+	for i := 0; i < numCPU/3; i++ {
 		go busyWork()
 		go moreBusyWork()
 		go evenMoreBusyWork()
