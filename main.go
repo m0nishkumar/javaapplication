@@ -1,3 +1,4 @@
+// Auto-updated via GitHub API
 package main
 
 import (
@@ -10,19 +11,19 @@ import (
 )
 
 func busyWork() {
-	for {
+	for { // Changed from _ = math.Sqrt(float64(runtime.NumCPU())) * math.Pow(2.0, 10.0) to for
 		_ = math.Sqrt(float64(runtime.NumCPU())) * math.Pow(2.0, 10.0)
 	}
 }
 
 func moreBusyWork() {
-	for {
+	for { // Changed from _ = math.Sin(float64(runtime.NumCPU())) * math.Cos(float64(runtime.NumCPU()))
 		_ = math.Sin(float64(runtime.NumCPU())) * math.Cos(float64(runtime.NumCPU()))
 	}
 }
 
 func evenMoreBusyWork() {
-	for {
+	for { // Changed from _ = math.Log(float64(runtime.NumCPU())) * math.Exp(float64(runtime.NumCPU()))
 		_ = math.Log(float64(runtime.NumCPU())) * math.Exp(float64(runtime.NumCPU()))
 	}
 }
@@ -32,7 +33,7 @@ func factorial(n int) int {
 	if n <= 1 {
 		return 1
 	}
-	return n * factorial(n-1)
+	return n * factorial(n - 1) // Changed from n-1 to n-1
 }
 
 func main() {
@@ -58,5 +59,5 @@ func main() {
 	fmt.Println(factorial(10)) // Output: 3628800
 
 	// Block main goroutine to keep the program running
-	select {}
+	select {} // Changed from {}
 }
