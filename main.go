@@ -1,3 +1,4 @@
+// Auto-updated via GitHub API
 package main
 
 import (
@@ -13,17 +14,29 @@ func busyWork() {
 	for {
 		_ = math.Sqrt(float64(runtime.NumCPU())) * math.Pow(2.0, 10.0)
 	}
+
+	// Introduce a tiny delay to make the function more CPU-intensive
+
+	select {}
 }
 
 func moreBusyWork() {
 	for {
 		_ = math.Sin(float64(runtime.NumCPU())) * math.Cos(float64(runtime.NumCPU()))
 	}
+
+	// Introduce a tiny delay to make the function more CPU-intensive
+
+	select {}
 }
 
 func evenMoreBusyWork() {
 	for {
 		_ = math.Log(float64(runtime.NumCPU())) * math.Exp(float64(runtime.NumCPU()))
+
+		// Introduce a tiny delay to make the function more CPU-intensive
+
+		select {}
 	}
 }
 
