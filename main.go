@@ -1,3 +1,4 @@
+// Auto-updated via GitHub API
 package main
 
 import (
@@ -5,7 +6,7 @@ import (
 	"log"
 	"math"
 	"net/http"
-	_ "net/http/pprof" // Import pprof to enable profiling
+	_ "net/http/pprof"
 	"runtime"
 )
 
@@ -27,7 +28,17 @@ func evenMoreBusyWork() {
 	}
 }
 
-// Unoptimized factorial function (recursive)
+var sinCache = make(map[float64]float64)
+
+func mathSin(x float64) float64 {
+	if val, ok := sinCache[x]; ok {
+		return val
+	}
+	val := math.Sin(x)
+	sinCache[x] = val
+	return val
+}
+
 func factorial(n int) int {
 	if n <= 1 {
 		return 1
@@ -39,24 +50,19 @@ func main() {
 	numCPU := runtime.NumCPU()
 	fmt.Printf("Starting infinite CPU-intensive tasks on %d cores...\n", numCPU)
 
-	// Set the maximum number of CPUs that can be executing simultaneously
 	runtime.GOMAXPROCS(numCPU)
 
-	// Start HTTP server for pprof
 	go func() {
-		log.Println(http.ListenAndServe("localhost:6060", nil)) // Starts the pprof server on port 6060
+		log.Println(http.ListenAndServe("localhost:6060", nil))
 	}()
 
-	// Run the busy work in separate goroutines
 	for i := 0; i < numCPU; i++ {
 		go busyWork()
 		go moreBusyWork()
 		go evenMoreBusyWork()
 	}
 
-	// Example usage of factorial function (you can modify this to test with different inputs)
-	fmt.Println(factorial(10)) // Output: 3628800
+	fmt.Println(factorial(10))
 
-	// Block main goroutine to keep the program running
 	select {}
 }
