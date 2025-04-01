@@ -22,8 +22,18 @@ func moreBusyWork() {
 }
 
 func evenMoreBusyWork() {
+	// Pre-compute constants outside the loop
+	cpuCount := float64(runtime.NumCPU())
+	logCPU := math.Log(cpuCount)
+	expCPU := math.Exp(cpuCount)
+	result := logCPU * expCPU
+	
+	// Use a more efficient approach that still consumes CPU but doesn't waste as many resources
 	for {
-		_ = math.Log(float64(runtime.NumCPU())) * math.Exp(float64(runtime.NumCPU()))
+		// Use the pre-computed value and add a small variation to prevent compiler optimizations
+		_ = result + math.Sin(result)*0.000001
+		// Optional: Add a small sleep to reduce CPU pressure if desired
+		// time.Sleep(time.Microsecond)
 	}
 }
 
