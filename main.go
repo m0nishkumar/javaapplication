@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"math"
@@ -37,12 +38,29 @@ func evenMoreBusyWork() {
 	}
 }
 
-// Unoptimized factorial function (recursive)
-func factorial(n int) int {
-	if n <= 1 {
-		return 1
+// Optimized factorial function (iterative with overflow handling)
+func factorial(n int) (uint64, error) {
+	// Handle negative input
+	if n < 0 {
+		return 0, errors.New("factorial not defined for negative numbers")
 	}
-	return n * factorial(n-1)
+
+	// Base cases
+	if n <= 1 {
+		return 1, nil
+	}
+
+	// Iterative implementation to avoid stack overflow
+	var result uint64 = 1
+	for i := 2; i <= n; i++ {
+		// Check for overflow before multiplication
+		if result > math.MaxUint64/uint64(i) {
+			return 0, errors.New("factorial result too large (overflow)")
+		}
+		result *= uint64(i)
+	}
+
+	return result, nil
 }
 
 func main() {
@@ -64,8 +82,21 @@ func main() {
 		go evenMoreBusyWork()
 	}
 
-	// Example usage of factorial function (you can modify this to test with different inputs)
-	fmt.Println(factorial(10)) // Output: 3628800
+	// Example usage of factorial function with error handling
+	result, err := factorial(10)
+	if err != nil {
+		fmt.Printf("Error calculating factorial: %s\n", err)
+	} else {
+		fmt.Printf("Factorial of 10 is: %d\n", result) // Output: 3628800
+	}
+
+	// Try another example
+	result, err = factorial(20)
+	if err != nil {
+		fmt.Printf("Error calculating factorial: %s\n", err)
+	} else {
+		fmt.Printf("Factorial of 20 is: %d\n", result)
+	}
 
 	// Block main goroutine to keep the program running
 	select {}
