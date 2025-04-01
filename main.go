@@ -37,12 +37,28 @@ func evenMoreBusyWork() {
 	}
 }
 
-// Unoptimized factorial function (recursive)
+// Original recursive factorial function - kept for reference
+// func factorial(n int) int {
+// 	if n <= 1 {
+// 		return 1
+// 	}
+// 	return n * factorial(n-1)
+// }
+
+// Optimized factorial function (iterative)
 func factorial(n int) int {
-	if n <= 1 {
-		return 1
+	if n < 0 {
+		return -1 // Error case: factorial not defined for negative numbers
 	}
-	return n * factorial(n-1)
+	if n <= 1 {
+		return 1 // Base case: 0! = 1! = 1
+	}
+	
+	result := 1
+	for i := 2; i <= n; i++ {
+		result *= i
+	}
+	return result
 }
 
 func main() {
